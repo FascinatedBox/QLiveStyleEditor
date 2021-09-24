@@ -357,6 +357,7 @@ QLiveStyleEditor::QLiveStyleEditor(QApplication *app, QString cssPath)
     setObjectName("QLiveStyleEditor");
     setWindowFilePath(_cssPath + " — Style Editor");
     resize(QGuiApplication::primaryScreen()->availableSize() * .3);
+    move(0, 0);
 
     connect(_styleEdit, &QTextEdit::textChanged,
             this, &QLiveStyleEditor::onTextChanged);
