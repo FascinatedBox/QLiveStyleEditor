@@ -44,10 +44,7 @@ private slots:
 
 private:
     // Css handling
-    static bool _cssValid;
     static const char *_cssPrelude;
-    static QString _cssError;
-    static bool isValidCss(QString text);
     static void messageHandler(QtMsgType t,
                                const QMessageLogContext &context,
                                const QString &msg);

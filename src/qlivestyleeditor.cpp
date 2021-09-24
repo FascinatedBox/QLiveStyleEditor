@@ -9,7 +9,6 @@
 #include <QScreen>
 #include <QStatusBar>
 #include <QTextStream>
-#include <QtGui/private/qcssparser_p.h>
 #include <QtMessageHandler>
 
 #include "qlivestyleeditor.h"
@@ -18,8 +17,6 @@
 /* Css handling */
 
 
-bool QLiveStyleEditor::_cssValid = true;
-QString QLiveStyleEditor::_cssError = "";
 const char *QLiveStyleEditor::_cssPrelude =
 R"(
     QLiveStyleEditor QMenu {
@@ -86,22 +83,8 @@ R"(
     }
 )";
 
-bool QLiveStyleEditor::isValidCss(QString text)
-{
-    QCss::Parser cssParser(text, /* is_file: */ false);
-    QCss::StyleSheet styleSheet;
-
-    _cssValid = true;
-
-    bool ok = cssParser.parse(&styleSheet) && _cssValid;
-
-    return ok;
-}
-
 void QLiveStyleEditor::messageHandler(QtMsgType t, const QMessageLogContext &context, const QString &msg)
 {
-    _cssError = msg;
-    _cssValid = false;
 }
 
 
@@ -292,10 +275,6 @@ void QLiveStyleEditor::onTextChanged()
     QString text = _styleEdit->toPlainText();
 
     setWindowModified(_styleEdit->document()->isModified());
-
-    if (isValidCss(text) == false)
-        return;
-
     text.prepend(_cssPrelude);
     _app->setStyleSheet(text);
 }

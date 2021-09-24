@@ -25,12 +25,6 @@ set_target_properties(
         AUTOGEN_BUILD_DIR "${CMAKE_CURRENT_BINARY_DIR}/.mocuic"
 )
 
-# This is necessary because this project uses Qt's internal css parsing.
-include_directories(
-    ${Qt5Core_OWN_PRIVATE_INCLUDE_DIRS}
-    ${Qt5Gui_OWN_PRIVATE_INCLUDE_DIRS}
-)
-
 target_link_libraries(
     qlivestyleeditor
         Qt5::Widgets
