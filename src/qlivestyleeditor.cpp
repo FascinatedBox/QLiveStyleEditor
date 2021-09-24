@@ -276,7 +276,13 @@ void QLiveStyleEditor::onTextChanged()
 
     setWindowModified(_styleEdit->document()->isModified());
     text.prepend(_cssPrelude);
+
+    /* Prevent stylesheet error messages from spamming the console. */
+    qInstallMessageHandler(QLiveStyleEditor::messageHandler);
     _app->setStyleSheet(text);
+
+    /* Restore the message handler since qDebug uses it. */
+    qInstallMessageHandler(0);
 }
 
 void QLiveStyleEditor::onUndoAvailable(bool available)
@@ -351,8 +357,6 @@ QLiveStyleEditor::QLiveStyleEditor(QApplication *app, QString cssPath)
     setObjectName("QLiveStyleEditor");
     setWindowFilePath(_cssPath + " — Style Editor");
     resize(QGuiApplication::primaryScreen()->availableSize() * .3);
-
-    qInstallMessageHandler(QLiveStyleEditor::messageHandler);
 
     connect(_styleEdit, &QTextEdit::textChanged,
             this, &QLiveStyleEditor::onTextChanged);
