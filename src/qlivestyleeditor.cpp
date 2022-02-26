@@ -75,7 +75,7 @@ R"(
 
     QLiveStyleEditor QTextEdit {
         background-color: #0d0d0d;
-        color: lightgray;
+        color: white;
         font-family: Monospace;
         font-size: 11px;
         selection-background-color: #444444;
