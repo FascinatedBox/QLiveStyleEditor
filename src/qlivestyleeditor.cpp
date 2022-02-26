@@ -366,4 +366,11 @@ QLiveStyleEditor::QLiveStyleEditor(QApplication *app, QString cssPath)
 
     text.prepend(_cssPrelude);
     _app->setStyleSheet(text);
+
+    /* Assume new rules will be added at the bottom (below the editor's rules),
+       and start at the bottom. */
+    QTextCursor cursor(_styleEdit->textCursor());
+
+    cursor.movePosition(QTextCursor::End);
+    _styleEdit->setTextCursor(cursor);
 }
