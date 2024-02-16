@@ -32,38 +32,29 @@ class QLiveStyleEditor : public QMainWindow
     Q_OBJECT
 
 public:
-    QLiveStyleEditor(QApplication *app, QString cssPath);
+    QLiveStyleEditor(QApplication *, QString);
 
 private slots:
-    void onAbout();
+    void onAbout(void);
     void onCutCopyAvailable(bool);
     void onRedoAvailable(bool);
-    void onSave();
-    void onTextChanged();
+    void onSave(void);
+    void onTextChanged(void);
     void onUndoAvailable(bool);
 
 private:
-    // Css handling
     static const char *_cssPrelude;
-    static void messageHandler(QtMsgType t,
-                               const QMessageLogContext &context,
-                               const QString &msg);
+    static void messageHandler(QtMsgType,
+                               const QMessageLogContext &,
+                               const QString &);
 
-    // Event handling
-    void closeEvent(QCloseEvent *e);
-
-    // Menu building
-    QAction *buildAction(QMenu *menu,
-                         QString iconThemeName,
-                         QString menuTip,
-                         QKeySequence::StandardKey keySequence);
-    void createMenuBar();
-    void createFileMenu();
-    void createEditMenu();
-    void createHelpMenu();
-
-    // Miscellaneous
-    void loadStylesheetIntoEditor(QString cssPath);
+    QAction *buildAction(QMenu *, QString, QString, QKeySequence::StandardKey);
+    void closeEvent(QCloseEvent *);
+    void createEditMenu(void);
+    void createFileMenu(void);
+    void createHelpMenu(void);
+    void createMenuBar(void);
+    void loadStylesheetIntoEditor(QString);
     bool trySave();
 
     QAction *_copyAct;

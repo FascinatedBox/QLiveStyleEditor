@@ -1,95 +1,155 @@
 #include <QDir>
-#include <QFile>
-#include <QGuiApplication>
-#include <QKeyEvent>
-#include <QMenu>
 #include <QMenuBar>
 #include <QMessageBox>
 #include <QSaveFile>
-#include <QScreen>
 #include <QStatusBar>
 #include <QTextStream>
-#include <QtMessageHandler>
 
 #include "qlivestyleeditor.h"
 
-
-/* Css handling */
-
-
 const char *QLiveStyleEditor::_cssPrelude =
 R"(
-    QLiveStyleEditor QMenu {
-        color: white;
-        background-color: #353535;
-        selection-background-color: palette(highlight);
-    }
-    QLiveStyleEditor QMenu {
-        color: white;
-    }
-    QLiveStyleEditor QMenu:disabled {
-        color: #777777;
-    }
+/* This was made by passing a BreezeDark stylesheet through qstyleshaker. */
 
-
-    QLiveStyleEditor QMenuBar {
-        background-color: #353535;
-        color: darkgray;
-    }
-    QLiveStyleEditor QMenuBar::item:selected {
-        background-color: #353535;
-        color: palette(highlight);
-        border-bottom: 2px solid palette(highlight);
-    }
-
-
-
-    QLiveStyleEditor QScrollBar:vertical {
-        background: #2c2c30;
-        width: 12px;
-        margin: 0px 4px 4px 0px;
-        border-bottom: 1px solid #2c2c30;
-        border-top: 1px solid #2c2c30;
-        border-radius: 3px;
-    }
-    QLiveStyleEditor QScrollBar::handle:vertical {
-        background: #565656;
-        min-height: 20px;
-        border: 1px solid #565656;
-        border-radius: 3px;
-    }
-    QLiveStyleEditor QScrollBar::add-line:vertical,
-    QLiveStyleEditor QScrollBar::sub-line:vertical
-    {
-        height: 0px;
-    }
-
-
-
-    QLiveStyleEditor QStatusBar {
-        background-color: #c7cbd1;
-        color: black;
-    }
-
-
-
-    QLiveStyleEditor QTextEdit {
-        background-color: #0d0d0d;
-        color: white;
-        font-family: Monospace;
-        font-size: 11px;
-        selection-background-color: #444444;
-        selection-color: lightgray;
-    }
-)";
-
-void QLiveStyleEditor::messageHandler(QtMsgType t, const QMessageLogContext &context, const QString &msg)
+QLiveStyleEditor QWidget
 {
+    background-clip: border;
+    background-color: #31363b;
+    border-image: none;
+    color: #eff0f1;
+    selection-background-color: #3daee9;
+    selection-color: #eff0f1;
 }
 
+QLiveStyleEditor QAbstractScrollArea
+{
+    background-color: transparent;
+    border-radius: 0.09em;
+    border: 0.09em solid #76797c;
+}
 
-/* Event handling */ 
+QLiveStyleEditor QAbstractScrollArea::corner
+{
+    background: #31363b;
+}
 
+QLiveStyleEditor QScrollBar:horizontal
+{
+    background-color: #1d2023;
+    border-radius: 0.17em;
+    border: 0.04em transparent #1d2023;
+    height: 0.65em;
+    margin: 0.13em 0.65em 0.13em 0.65em;
+}
+
+QLiveStyleEditor QScrollBar:horizontal:hover
+{
+    background-color: #76797c;
+}
+
+QLiveStyleEditor QScrollBar::handle:horizontal
+{
+    background-color: #3daee9;
+    border-radius: 0.17em;
+    border: 0.04em solid #3daee9;
+    min-width: 0.5em;
+}
+
+QLiveStyleEditor QScrollBar::handle:horizontal:hover
+{
+    background-color: #3daee9;
+    border: 0.04em solid #3daee9;
+}
+
+QLiveStyleEditor QScrollBar:vertical
+{
+    background-color: #1d2023;
+    border-radius: 0.17em;
+    border: 0.04em transparent #1d2023;
+    margin: 0.65em 0.13em 0.65em 0.13em;
+    width: 0.65em;
+}
+
+QLiveStyleEditor QScrollBar:vertical:hover
+{
+    background-color: #76797c;
+}
+
+QLiveStyleEditor QScrollBar::handle:vertical
+{
+    background-color: #3daee9;
+    border-radius: 0.17em;
+    border: 0.04em solid #3daee9;
+    min-height: 0.5em;
+}
+
+QLiveStyleEditor QScrollBar::handle:vertical:hover
+{
+    background-color: #3daee9;
+    border: 0.04em solid #3daee9;
+}
+
+QLiveStyleEditor QScrollBar::add-line:horizontal,
+QLiveStyleEditor QScrollBar::sub-line:horizontal,
+QLiveStyleEditor QScrollBar::add-line:vertical,
+QLiveStyleEditor QScrollBar::sub-line:vertical
+{
+    height: 0px;
+    width: 0px;
+}
+
+QLiveStyleEditor QScrollBar:horizontal
+{
+    margin: 4px 0px 0px 0px;
+}
+
+QLiveStyleEditor QScrollBar:vertical
+{
+    margin: 0px 0px 0px 4px;
+}
+
+QLiveStyleEditor QTextEdit
+{
+    background-color: #1d2023;
+    border: 0.04em solid #76797c;
+    color: #eff0f1;
+}
+
+QLiveStyleEditor QMainWindow::separator
+{
+    background: transparent;
+    border: 0.09em transparent #76797c;
+}
+
+QLiveStyleEditor QMenu::separator
+{
+    height: 0.09em;
+    background-color: #76797c;
+    padding-left: 0.2em;
+    margin-top: 0.2em;
+    margin-bottom: 0.2em;
+    margin-left: 0.41em;
+    margin-right: 0.41em;
+}
+
+QLiveStyleEditor QTextEdit:hover,
+QLiveStyleEditor QTextEdit:focus
+{
+    border: 0.04em solid #3daee9;
+    color: #eff0f1;
+}
+
+QLiveStyleEditor QTextEdit:hover:pressed
+{
+    background-color: #31363b;
+}
+)";
+
+void QLiveStyleEditor::messageHandler(QtMsgType t,
+                                      const QMessageLogContext &context,
+                                      const QString &msg)
+{
+}
 
 void QLiveStyleEditor::closeEvent(QCloseEvent *e)
 {
@@ -113,10 +173,6 @@ void QLiveStyleEditor::closeEvent(QCloseEvent *e)
         e->accept();
 }
 
-
-/* Menu building */
-
-
 QAction *QLiveStyleEditor::buildAction(QMenu *menu,
                                        QString iconThemeName,
                                        QString menuTip,
@@ -130,7 +186,7 @@ QAction *QLiveStyleEditor::buildAction(QMenu *menu,
     return act;
 }
 
-void QLiveStyleEditor::createFileMenu()
+void QLiveStyleEditor::createFileMenu(void)
 {
     QMenu *fileMenu = menuBar()->addMenu(tr("&File"));
 
@@ -144,7 +200,7 @@ void QLiveStyleEditor::createFileMenu()
     );
 }
 
-void QLiveStyleEditor::createEditMenu()
+void QLiveStyleEditor::createEditMenu(void)
 {
     QMenu *editMenu = menuBar()->addMenu(tr("&Edit"));
 
@@ -209,7 +265,7 @@ void QLiveStyleEditor::createEditMenu()
     );
 }
 
-void QLiveStyleEditor::createHelpMenu()
+void QLiveStyleEditor::createHelpMenu(void)
 {
     QMenu *helpMenu = menuBar()->addMenu(tr("&Help"));
 
@@ -223,18 +279,14 @@ void QLiveStyleEditor::createHelpMenu()
     );
 }
 
-void QLiveStyleEditor::createMenuBar()
+void QLiveStyleEditor::createMenuBar(void)
 {
     createFileMenu();
     createEditMenu();
     createHelpMenu();
 }
 
-
-/* Slots */
-
-
-void QLiveStyleEditor::onAbout()
+void QLiveStyleEditor::onAbout(void)
 {
     (void) QMessageBox::information(
         this,
@@ -260,7 +312,7 @@ void QLiveStyleEditor::onRedoAvailable(bool available)
     _redoAct->setEnabled(available);
 }
 
-void QLiveStyleEditor::onSave()
+void QLiveStyleEditor::onSave(void)
 {
     if (trySave() == false)
         return;
@@ -270,7 +322,7 @@ void QLiveStyleEditor::onSave()
     statusBar()->showMessage(tr("Saved %1").arg(_cssPath), 2000);
 }
 
-void QLiveStyleEditor::onTextChanged()
+void QLiveStyleEditor::onTextChanged(void)
 {
     QString text = _styleEdit->toPlainText();
 
@@ -290,11 +342,7 @@ void QLiveStyleEditor::onUndoAvailable(bool available)
     _undoAct->setEnabled(available);
 }
 
-
-/* Miscellaneous */
-
-
-bool QLiveStyleEditor::trySave()
+bool QLiveStyleEditor::trySave(void)
 {
     QString errorMessage;
 
@@ -356,8 +404,6 @@ QLiveStyleEditor::QLiveStyleEditor(QApplication *app, QString cssPath)
     setCentralWidget(_styleEdit);
     setObjectName("QLiveStyleEditor");
     setWindowFilePath(_cssPath + " — Style Editor");
-    resize(QGuiApplication::primaryScreen()->availableSize() * .3);
-    move(0, 0);
 
     connect(_styleEdit, &QTextEdit::textChanged,
             this, &QLiveStyleEditor::onTextChanged);
@@ -367,8 +413,7 @@ QLiveStyleEditor::QLiveStyleEditor(QApplication *app, QString cssPath)
     text.prepend(_cssPrelude);
     _app->setStyleSheet(text);
 
-    /* Assume new rules will be added at the bottom (below the editor's rules),
-       and start at the bottom. */
+    /* Assume new rules will be added at the bottom and start there. */
     QTextCursor cursor(_styleEdit->textCursor());
 
     cursor.movePosition(QTextCursor::End);
